@@ -4,8 +4,7 @@ const Schema = mongoose.Schema;
 const todoSchema = new Schema({
   name: String,
   description: String,
-  createdAt: String,
-  dueDate: Date,
+  due: Date,
   status: String,
   userId: {
     type: Schema.Types.ObjectId, 

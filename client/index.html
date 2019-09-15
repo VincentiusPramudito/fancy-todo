@@ -7,7 +7,7 @@
 
     <!-- To specify the client Id with google sign-in -->
     <meta name="google-signin-client_id"
-        content="859258554488-rqqovan7i68ae9tguek0ti9rddjer7g6.apps.googleusercontent.com">
+        content="902935968461-epff41hgjgs9ncr90gfdqsof6n2n4dtj.apps.googleusercontent.com">
 
     <!-- To ensur propere rendering and touch zooming for all devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -19,6 +19,7 @@
     <!-- Link to the CSS file -->
     <link rel="stylesheet" type="text/css" href="./resources/css/main.css">
     <link rel="icon" href="./resources/images/icon.png">
+    <link href="https://fonts.googleapis.com/css?family=Chilanka&display=swap" rel="stylesheet">
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
@@ -28,24 +29,25 @@
 <body>
     <header>
         <div>
-            <img src="./resources/images/background-img.jpg" id="bg-main" alt="this should be an image">
+            <img src="./resources/images/background-img.jpg" id="bg-main" alt="this should be an image"
+                style="top: 0px; position: fixed">
         </div>
     </header>
 
-    <!-- Login User -->
+    <!-- Login/Logout User -->
     <section>
-        <button class="nav-link active" id="logout" onclick="signOut()">logout</button>
+        <div class="button_cont" align="center">
+                <button id="logout" onclick="signOut()">logout</button>
+        </div>
         <div class="g-signin2" data-onsuccess="onSignIn"></div>
         <div class="login-form">
             <form method="post">
                 <h2 class="text-center">Log in</h2>
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Username" required="required"
-                        id="username-login">
+                    <input type="text" class="form-control" placeholder="Username" id="username-login" required>
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" placeholder="Password" required="required"
-                        id="password-login">
+                    <input type="password" class="form-control" placeholder="Password" id="password-login" required>
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-block" onclick="login()">Login</button>
@@ -68,12 +70,11 @@
             <form method="post">
                 <h2 class="text-center">Register</h2>
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Username" required="required"
-                        id="username-register">
+                    <input type="text" class="form-control" placeholder="Username" id="username-register" required />
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" placeholder="Password" required="required"
-                        id="password-register">
+                    <input type="password" class="form-control" placeholder="Password" id="password-register"
+                        required />
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-block" onclick="register()">Register</button>
@@ -86,58 +87,92 @@
         </div>
     </section>
 
-    <!-- Form To Do -->
-    <section id="form-todo">
-        <div class="row" id="todo-page">
-            <div class="col-12">
-                <div class="col-12">
-                    <h2 id="random-quote" class="mt-4" style="text-align: center; color: black;"></h2>
-                    <h3 id="random-quote-author" class="mt-4" style="text-align: center; color: rgb(92, 92, 92);"></h3>
-                </div>
+    <!-- Todo List -->
+    <div class="container col-9">
+        <div class="jumbotron">
+            <p class="title">Fancy Todo</p>
+            <div id="author"></div>
+
+            <!-- Add-todo-button -->
+            <div class="row" align="center" id="add-todo-button">
+                <button type="button" class="add-todo-button">Add New Task</button>
+            </div>
+
+            <div class="row">
+                <table class="table" border="1">
+                    <thead class="thead-dark">
+                        <tr align="center">
+                            <th> No. </th>
+                            <th> What I have To Do </th>
+                            <th> Description the Task </th>
+                            <th> Do It Before </th>
+                            <th> Status </th>
+                            <th> Update </th>
+                            <th> Delete </th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-todos"></tbody>
+                </table>
+                <marquee scrolldelay="90">Todos App - Reminder app for what you have to do..</marquee>
             </div>
         </div>
-    </section>
-    <!-- Form Add Todo -->
+    </div>
+
+    <!-- Modal Add Todo -->
     <section>
-        <div class="container col-3">
+        <div class="modal form-add-todo col-3">
             <div class="jumbotron">
-                <form id="form-add-todo" method="post">
+                <form id="form-add-todo">
                     <div class="form-group">
-                        <label for="add-todo-name">Task Name</label>
+                        <label for="name">Task Name</label>
                         <input type="text" class="form-control" id="name" required />
                     </div>
                     <div class="form-group">
-                        <label for="add-todo-description">Description</label>
+                        <label for="description">Description</label>
                         <input type="text" class="form-control" id="description" required />
                     </div>
                     <div class="form-group">
-                        <label for="add-todo-due-date">Due Date</label>
-                        <input type="date" class="form-control" id="due">
+                        <label for="due">Due Date</label>
+                        <input type="date" class="form-control" id="due" required />
                     </div>
-                    <button type="submit" class="btn btn-dark" onclick="createTodo()">Submit</button>
+                    <center>
+                        <button type="submit" class="btn btn-dark">Submit</button>
+                        <button type="button" class="btn btn-dark" id="add-todo-button-cancel">Cancle</button>
+                    </center>
                 </form>
             </div>
         </div>
 
-        <div class="container col-9">
-            <div class="jumbotron">
-                <div class="row">
-                    <table class="table" border="1">
-                        <thead class="thead-dark">
-                            <tr align="center">
-                                <th>What I have To Do</th>
-                                <th>Description the Task</th>
-                                <th>Do It Before/th>
-                                <th>Status</th>
-                                <th>Update</th>
-                                <th>Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody id="table-todos"></tbody>
-                    </table>
+        <!-- Modal Update Todo -->
+        <center>
+            <div class="modal fade" id="form-update-todo" tabindex="-1" role="dialog"
+                aria-labelledby="form-update-todo-title" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <form id="form-update-todo">
+                                <div class="form-group">
+                                    <label for="update-todo-name">Name</label>
+                                    <input type="text" class="form-control" id="update-todo-name" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="update-todo-description">Description</label>
+                                    <input type="text" class="form-control" id="update-todo-description" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="update-todo-due-date">Due Date</label>
+                                    <input type="date" class="form-control" id="update-todo-due-date" />
+                                </div>
+                                <button type="submit" class="btn btn-dark">
+                                    Save Changes
+                                </button>
+                                <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </center>
     </section>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -153,5 +188,4 @@
     <script src="./resources/script/main.js"></script>
     <script src="./resources/script/todo.js"></script>
 </body>
-
 </html>

@@ -1,16 +1,17 @@
 const express = require("express");
 const router = express.Router();
-// const auth = require("../middlewares/authentication")
+const {authentication, authorization } = require("../middlewares/authentication")
 
 const TodoController = require("../controllers/todo");
 const authorizationUser = require("../middlewares/authorization-user");
 
-// routes.use(auth.authentication)
+router.use(authentication)
 router.get("/", TodoController.getTodos);
-router.get("/:id", TodoController.getTodo);
 router.post("/", TodoController.createTodo);
-router.put("/:id", authorizationUser, TodoController.updateTodo);
-router.put("/:id/status", authorizationUser, TodoController.updateStatus);
-router.delete("/:id", authorizationUser, TodoController.deleteTodo);
+
+router.get("/:id", authorization, TodoController.getTodo);  
+router.put("/:id", authorization, TodoController.updateTodo);
+router.patch("/:id/status", authorization, TodoController.updateStatus);
+router.delete("/:id", authorization, TodoController.deleteTodo);
 
 module.exports = router;

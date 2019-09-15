@@ -18,12 +18,9 @@ mongoose.connect("mongodb://localhost:27017/fancy-todo", { useNewUrlParser:true 
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 app.use(cors())
-app.use('/', routes);
+
+app.use('/api', routes);
 app.use(errHandling)
-// app.use(function (err, req, res, next) {
-//      console.log(err.response)
-//      res.status(500).send({message : 'Internal Server Error' })
-//  })
 
 const port = process.env.PORT || 3000;
 app.listen(port, function() {

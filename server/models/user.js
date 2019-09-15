@@ -6,12 +6,10 @@ const userSchema = new Schema({
     type: String,
     required: [true, "Username is required"],
     validate: {
-      // Case sensitive
       validator: function(username) {
-        return User.find({ "username": { "$ne": username }})
+        return User.findOne({ "username":  username })
           .then(members => {
-            const duplicate = members.filter(member => member.username.toLowerCase() === username.toLowerCase())[0];
-            if (duplicate) return false;
+            if (members) return false;
           })
       },
       message: props => `Username ${props.value} has been taken already.`,
@@ -21,7 +19,6 @@ const userSchema = new Schema({
     type: String,
     required: [true, "Password is required"],
   },
-
   todos: [{
     type: Schema.Types.ObjectId,
     ref: "Todo",

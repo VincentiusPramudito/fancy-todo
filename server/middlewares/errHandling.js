@@ -4,11 +4,11 @@ module.exports = function(err, req, res, next) {
       res.status(404).json({
         message: 'Resource Not Found',
       });
-    } else if (err.name === 'SequelizeValidationError') {
-      const errors = err.errors.map((error) => ({
-        message: error.message,
-        path: error.path,
-      }));
+    } else if (err.name === 'ValidationError') {
+      const errors =  {
+        message: err.message,
+        path: err.path,
+      };
       res.status(400).json({
         errors,
       });
@@ -17,7 +17,13 @@ module.exports = function(err, req, res, next) {
       res.status(403).json({
         message: 'Not Authorized Page',
       });
-    } else {
+    
+    } else if (err.name === 'JsonWebTokenError') {
+      res.status(400).json({
+        message: err.message
+      });
+    }
+    else {
       res.status(500).json({
         message: 'Internal Server Error',
       });
